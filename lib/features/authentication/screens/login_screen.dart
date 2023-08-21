@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:new_project_sat26/features/authentication/screens/home.dart';
+import 'package:lottie/lottie.dart';
+import 'package:new_project_sat26/features/Home-Screen/Screens/home.dart';
 import 'package:new_project_sat26/features/authentication/screens/register_screen.dart';
+import 'package:new_project_sat26/utills/pref_keys_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/custom_text_field.dart';
@@ -29,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: isLoading
-            ? Center(child: CircularProgressIndicator())
+            ?Center(child: Lottie.asset('assets/loading.json'))
             : Form(
           key: formKey,
           child: Column(
@@ -132,21 +134,23 @@ class _LoginScreenState extends State<LoginScreen> {
               //   height: 1,
               //   thickness: 3,
               // ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    height: 1,
-                    width: 200,
-                    color: Colors.grey,
-                  ),
-                  Text('OR'),
-                  Container(
-                    height: 1,
-                    width: 200,
-                    color: Colors.grey,
-                  ),
-                ],
+              SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      height: 1,
+                      width: 200,
+                      color: Colors.grey,
+                    ),
+                    Text('OR'),
+                    Container(
+                      height: 1,
+                      width: 200,
+                      color: Colors.grey,
+                    ),
+                  ],
+                ),
               ),
 
               // login button with google
@@ -262,7 +266,7 @@ class _LoginScreenState extends State<LoginScreen> {
         final token = response.data['data']['token'];
 
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.setString('access_token', token);
+        prefs.setString(PrefKeys.accessToken, token);
 
 
         Navigator.of(context).push(

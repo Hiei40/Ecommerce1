@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:new_project_sat26/features/authentication/screens/home.dart';
+import 'package:new_project_sat26/features/Home-Screen/Screens/home.dart';
 import 'package:new_project_sat26/features/authentication/screens/login_screen.dart';
+import 'package:new_project_sat26/utills/pref_keys_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void initData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.get('access_token');
+    final token = prefs.get(PrefKeys.accessToken);
 
     if (token == null) {
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(

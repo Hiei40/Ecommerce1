@@ -5,6 +5,8 @@ import 'features/SplashScreen/Splash.dart';
 
 // entry point
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // everything in flutter is a widget
   // widget is class
   // every class in flutter inherit from a widget class
