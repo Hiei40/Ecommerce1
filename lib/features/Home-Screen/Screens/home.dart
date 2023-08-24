@@ -1,7 +1,6 @@
-
 // [UI - Logic(API) ]
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import '../data/home_repository.dart';
@@ -71,13 +70,15 @@ class HomeScreen extends StatelessWidget {
           //   ),
           // ),
 
-          _categoryListWidget(),
+          buildCategoryListWidget(),
 
           // Flash Sale
         ],
       ),
     );
   }
+
+  FutureBuilder<dynamic> buildCategoryListWidget() => _categoryListWidget();
 
   FutureBuilder<dynamic> _categoryListWidget() {
     return FutureBuilder(
@@ -101,23 +102,39 @@ class HomeScreen extends StatelessWidget {
         if (snapshot.hasData) {
           final categories = snapshot.data['data']['data'] as List;
 
-
           print('list of categories : ${categories}');
 
-          return Container(
-            height: 130,
-            child: ListView.builder(
-              itemCount: categories.length,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return CategoryItemWidget(
-                  data: categories[index],
-                );
-              },
-            ),
-          );
+          return FutureBuilder(
+              future: HomeRepository().getCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.hasError) {
+                  return Text('There is an error try again!');
+                }
+                if (snapshot.hasData) {
+                final Categories=  snapshot.data['data']['data']as List;
+                print("listOfCategories ${Categories}");
+                  return Container(
+                    height: 130,
+                    child: ListView.builder(
+                      itemCount: categories.length,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return CategoryItemWidget(
+                          data: categories[index],
+                        );
+                      },
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              });
         }
-
         return SizedBox();
       },
     );
@@ -126,13 +143,11 @@ class HomeScreen extends StatelessWidget {
   // FutureBuilder
   // take from you future -> function get data
   // give you a builder -> build ui
-
   // Steps to integrate API(Data) with UI
   // 1. [DATA/REPOSITORY] Call API (GET,POST, etc..) -> data
   // 2. [UI] Call  [DATA/REPOSITORY] in FutureBuilder
   // 3. [UI] Handle Snapshot -> access real data
   // 4. [UI] Merge data in Widget
-
   Widget _sliderWidget() {
     return FutureBuilder(
         future: HomeRepository().getHomeData(),
@@ -157,7 +172,7 @@ class HomeScreen extends StatelessWidget {
             /// first way
             items: List.generate(
               banners.length,
-                  (index) {
+              (index) {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
