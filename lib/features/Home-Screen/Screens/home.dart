@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import '../../category/Screens/Category_Screen.dart';
 import '../data/home_repository.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -116,16 +117,30 @@ class HomeScreen extends StatelessWidget {
                   return Text('There is an error try again!');
                 }
                 if (snapshot.hasData) {
-                final Categories=  snapshot.data['data']['data']as List;
-                print("listOfCategories ${Categories}");
+                  final Categories = snapshot.data['data']['data'] as List;
+                  print("listOfCategories ${Categories}");
                   return Container(
                     height: 130,
                     child: ListView.builder(
                       itemCount: categories.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        return CategoryItemWidget(
-                          data: categories[index],
+                        final name = categories[index]['name'];
+                        final id = categories[index]['id'];
+
+                        if (index == 1) {
+                          // return CircleAvatar();
+                        }
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => CategoryScreen(Categoryname: '${name}', id: id,)),
+                            );
+                          },
+                          child: CategoryItemWidget(
+                            data: categories[index],
+                          ),
                         );
                       },
                     ),
@@ -156,8 +171,11 @@ class HomeScreen extends StatelessWidget {
           print('connection state : ${snapshot.connectionState}');
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
+            return SizedBox(
+              height: 100,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           }
 
@@ -227,7 +245,10 @@ class CategoryItemWidget extends StatelessWidget {
             backgroundColor: Color(0xFFEBF0FF),
             child: CircleAvatar(
               radius: 30,
-              backgroundImage: NetworkImage(data['image']),
+              backgroundImage: NetworkImage(data['image'] ==null?
+              'https://eg.jumia.is/unsafe/fit-in/500x500/filters:fill(white)/product/50/061603/1.jpg?1937'
+              :data['image'],
+              ),
             ),
           ),
         ),
