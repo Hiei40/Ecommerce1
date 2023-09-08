@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_project_sat26/features/category/data/category_repo.dart';
+import 'package:new_project_sat26/features/category/models/category_item_model.dart';
 
 class CategoryScreen extends StatefulWidget {
   final String Categoryname;
@@ -38,25 +39,35 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 childAspectRatio: 0.7,
               ),
               itemBuilder: (_, index) {
-                final data=ListOfCatgories[index];
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Image.network(
-                        data['image'],
-                        height: 100,
-                        width: 100,
+                if (index < ListOfCatgories.length) {
+                  final Product = CategoryItemModel.fromJson(ListOfCatgories[index]);
+                  return GestureDetector(
+                    onTap: (){},
+                    child: Container(
+
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.grey,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      Text(data['name']),
-                    ],
-                  ),
-                );
+                      child: Column(
+                        children: [
+                          Image.network(
+                            Product.image,
+                            height: 100,
+                            width: 100,
+                          ),
+                          Text(Product.name),
+                        ],
+                      ),
+                    ),
+                  );
+                  // Rest of the code
+                } else {
+                  return Container(); // or handle the out-of-range case accordingly
+                }
+
               },
             );
           }
