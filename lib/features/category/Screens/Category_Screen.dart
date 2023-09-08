@@ -42,7 +42,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 if (index < ListOfCatgories.length) {
                   final Product = CategoryItemModel.fromJson(ListOfCatgories[index]);
                   return GestureDetector(
-                    onTap: (){},
+                    onTap: (){
+
+
+                    },
                     child: Container(
 
                       decoration: BoxDecoration(
