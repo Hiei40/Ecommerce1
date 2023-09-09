@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_project_sat26/features/product/screens/product_screen.dart';
 
+import '../../Product/Screen/product.dart';
 import '../data/category_repo.dart';
 import '../models/category_item_model.dart';
 

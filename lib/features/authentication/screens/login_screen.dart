@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:new_project_sat26/features/Home-Screen/Screens/home.dart';
 import 'package:new_project_sat26/features/authentication/screens/register_screen.dart';
-import 'package:new_project_sat26/features/home/screens/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../utils/prefs_key_constants.dart';
+import '../../../utills/pref_keys_constants.dart';
 import '../widgets/custom_text_field.dart';
 
 // assets

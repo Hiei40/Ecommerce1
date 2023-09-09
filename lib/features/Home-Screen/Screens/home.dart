@@ -135,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                  builder: (context) => CategoryScreen(Categoryname: '${name}', id: id,)),
+                                  builder: (context) => CategoryScreen(categoryName: '${name}', id: id,)),
                             );
                           },
                           child: CategoryItemWidget(
