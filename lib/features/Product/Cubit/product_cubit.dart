@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:new_project_sat26/features/Product/Models/ProductModel.dart';
@@ -7,15 +9,22 @@ part 'product_state.dart';
 
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
-void getProduct(int id)async{
-emit(LoadingProduct());
-  final Product =await ProductRepo().getProductRepo(id);
-
-emit(ProductSuccessful(Product!));
-
+  void getProduct(int id) async {
+    try {
+      emit(LoadingProduct());
+      final Product = await ProductRepo().getProductRepo(id);
+      if (Product != null) {
+        emit(ProductSuccessful(Product));
+      }
+    } on SocketException catch (e) {
+      emit(ProductNoInternetConnectionFailed());
+      // TODO
+    }on Exception catch(e){
+      emit(ProductFailed());
+      
+    }catch(e){
+      emit(ProductFailed());
+      
+    }
   }
-
 }
-
-
-

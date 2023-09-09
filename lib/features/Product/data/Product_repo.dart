@@ -6,9 +6,9 @@ class ProductRepo {
     try {
       final response = await Dio().get('https://student.valuxapps.com/api/$id');
       return productModelFromJson(response.data["data"]);
-    } catch (_) {
+    } catch (e) {
       // TODO
-      return null;
+      throw e;
     }
   }
 }
