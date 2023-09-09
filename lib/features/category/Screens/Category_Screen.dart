@@ -13,6 +13,12 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+dynamic category ;
+  void initState(){
+    super.initState();
+    category=  CategoryRepo().getCategoryDetails(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +26,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         title: Text(widget.Categoryname),
       ),
       body: FutureBuilder(
-        future: CategoryRepo().getCategoryDetails(widget.id),
+        future: category,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -31,7 +37,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             return Text('There is an error, please try again!');
           }
           if (snapshot.hasData) {
-            final ListOfCatgories = snapshot.data['data']['data'];
+            final ListOfCatgories = (snapshot.data as Map<String,dynamic>)['data']['data'];
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
