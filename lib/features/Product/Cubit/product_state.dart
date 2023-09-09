@@ -17,4 +17,4 @@ class ProductFailed extends ProductState {}
 
 class ProductNoInternetConnectionFailed extends ProductState {}
 
-class ProductLoading extends ProductState {}
+class LoadingProduct extends ProductState {}

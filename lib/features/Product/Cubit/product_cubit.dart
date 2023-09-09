@@ -8,7 +8,7 @@ part 'product_state.dart';
 class ProductCubit extends Cubit<ProductState> {
   ProductCubit() : super(ProductInitial());
 void getProduct(int id)async{
-
+emit(LoadingProduct());
   final Product =await ProductRepo().getProductRepo(id);
 
 emit(ProductSuccessful(Product!));

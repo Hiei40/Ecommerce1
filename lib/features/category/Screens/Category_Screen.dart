@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_project_sat26/features/Product/Screen/product.dart';
 import 'package:new_project_sat26/features/category/data/category_repo.dart';
 import 'package:new_project_sat26/features/category/models/category_item_model.dart';
 
@@ -43,7 +44,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   final Product = CategoryItemModel.fromJson(ListOfCatgories[index]);
                   return GestureDetector(
                     onTap: (){
-
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ProductScreen(productId:Product.id)),
+                      );
 
                     },
                     child: Container(
